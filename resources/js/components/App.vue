@@ -76,6 +76,7 @@ export default {
       } else {
         axios.get(`api/tasks/search?isDone=${this.filter}`).then((response) => {
           this.tasks = response.data.tasks;
+          this.itemsLeft = response.data.itemsLeft
         });
       }
     },
