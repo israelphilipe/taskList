@@ -87,10 +87,6 @@ export default {
   },
   created() {
     this.getTasks();
-    //this.interval = setInterval(() => this.getTasks(), 1000);
-  },
-  beforeDestroy() {
-    clearInterval(this.interval);
   },
 };
 </script>
