@@ -88,5 +88,17 @@
     ```
     <br>
     
-
+1. Caso queira rodar os testes com PHPunit
+    * Criar um banco de dados de teste e alterar o arquivo phpunit.xml para conter:
+    ```sh
+    <server name="DB_DATABASE" value="nome-do-seu-banco-de-testes"/> 
+    ```
+    * Rodar o comando
+    ```sh
+    $ phpunit
+    ```
+ 1. Caso queira rodar os testes com PHPunit com filtros(nome do arquivo ou funcao)
+    ```sh
+    $ phpunit --filter TaskTest
+    ```
 
