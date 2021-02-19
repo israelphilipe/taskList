@@ -36,7 +36,7 @@
           </div>
 
           <div class="clearOptions">
-            <p v-on:click="clearCompleted()" class="btn btn-link">Clear completed</p>
+            <p v-on:click="clearCompleted()" class="btn btn-link">Clear Done</p>
             <p v-on:click="clearAll()" class="btn btn-link">Clear all</p>
           </div>
         </div>
