@@ -99,13 +99,11 @@ export default {
     },
     clearCompleted(){
       axios.delete(`api/tasks/clearCompleted`).then((response) => {
-          console.log(response);
           this.getTasks();
       });
     },
     clearAll(){
       axios.delete(`api/tasks/clearAll`).then((response) => {
-          console.log(response);
           this.getTasks();
       })
     }
