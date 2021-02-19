@@ -96,6 +96,16 @@ class TaskController extends Controller
         $task->delete();
     }
 
+    public function destroyCompleted(){
+        Task::where('isDone','=',true)->delete();
+        return response()->json('deleted done tasks');
+    }
+
+    public function destroyAll(){
+        Task::whereNotNull('id')->delete();
+        return response()->json('all tasks');
+    }
+
     /**
      * Search with filters
      */

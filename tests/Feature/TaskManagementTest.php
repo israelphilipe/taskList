@@ -92,4 +92,41 @@ class TaskManagementTest extends TestCase
         $this->assertCount(0, Task::all());
     }
 
+    /** @test */
+    public function task_can_delete_all()
+    {
+        
+        $this->generateTasks(10);
+        $this->assertCount(10, Task::all());
+        $this->delete('api/tasks/clearAll');
+        $this->assertCount(0, Task::all());
+    }
+
+    /** @test */
+    public function task_can_delete_completed_tasks()
+    {
+        $this->withoutExceptionHandling();
+        $this->generateTasks(10);
+        $this->assertCount(10, Task::all());
+        $totalDone = 4;
+        $tasks = Task::all();
+        for($i = 0;$i < $totalDone;$i++){
+            $tasks[$i]->isDone = true;
+            $tasks[$i]->update();
+        }
+        $total = count($tasks);
+        $expected = $total - $totalDone;
+        $this->delete('api/tasks/clearCompleted');
+        $this->assertCount($expected, Task::all());
+    }
+
+
+    public function generateTasks($total){
+        for($i = 0;$i < $total;$i++){
+            $this->post('api/tasks',[
+                'title' => 'some title'.$i
+            ]);
+        }
+    }
+
 }

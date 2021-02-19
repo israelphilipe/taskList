@@ -21,5 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('tasks')->group(function(){
     Route::get('/search',[TaskController::class,'search']);
+    Route::delete('/clearCompleted',[TaskController::class,'destroyCompleted']);
+    Route::delete('/clearAll',[TaskController::class,'destroyAll']);
 });
 Route::apiResource('tasks', TaskController::class);

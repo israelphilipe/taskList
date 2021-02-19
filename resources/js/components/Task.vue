@@ -78,7 +78,7 @@ export default {
 }
 
 .taskDone{
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.25);
 }
 
 .taskDone p{

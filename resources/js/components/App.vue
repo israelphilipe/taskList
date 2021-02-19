@@ -6,32 +6,39 @@
     </div>
     <div class="shadow mb-5 bg-white rounded">
       <task-list v-on:taskUpdated="getTasks()" :tasks="this.tasks" />
-      <div class="filters list-group-item">
+      <div class="options list-group-item">
         <div class="itemsCount">
-          <p>{{`${this.itemsLeft} items left`}}</p>
+          <p>{{ `${this.itemsLeft} items left` }}</p>
         </div>
         <div>
-          <button
-            type="button"
-            v-on:click="filterTasks(null)"
-            class="btn btn-light"
-          >
-            All
-          </button>
-          <button
-            type="button"
-            v-on:click="filterTasks(false)"
-            class="btn btn-light"
-          >
-            To do
-          </button>
-          <button
-            type="button"
-            v-on:click="filterTasks(true)"
-            class="btn btn-light"
-          >
-            Done
-          </button>
+          <div class="filterButtons">
+            <button
+              type="button"
+              v-on:click="filterTasks(null)"
+              class="btn btn-light"
+            >
+              All
+            </button>
+            <button
+              type="button"
+              v-on:click="filterTasks(false)"
+              class="btn btn-light"
+            >
+              To do
+            </button>
+            <button
+              type="button"
+              v-on:click="filterTasks(true)"
+              class="btn btn-light"
+            >
+              Done
+            </button>
+          </div>
+
+          <div class="clearOptions">
+            <p v-on:click="clearCompleted()" class="btn btn-link">Clear completed</p>
+            <p v-on:click="clearAll()" class="btn btn-link">Clear all</p>
+          </div>
         </div>
       </div>
     </div>
@@ -52,7 +59,7 @@ export default {
     return {
       tasks: {},
       filter: null,
-      itemsLeft: 0
+      itemsLeft: 0,
     };
   },
   computed: {},
@@ -71,12 +78,12 @@ export default {
       if (this.filter == null) {
         axios.get("api/tasks").then((response) => {
           this.tasks = response.data.tasks;
-          this.itemsLeft = response.data.itemsLeft
+          this.itemsLeft = response.data.itemsLeft;
         });
       } else {
         axios.get(`api/tasks/search?isDone=${this.filter}`).then((response) => {
           this.tasks = response.data.tasks;
-          this.itemsLeft = response.data.itemsLeft
+          this.itemsLeft = response.data.itemsLeft;
         });
       }
     },
@@ -84,6 +91,18 @@ export default {
       this.filter = isDone;
       this.getTasks();
     },
+    clearCompleted(){
+      axios.delete(`api/tasks/clearCompleted`).then((response) => {
+          console.log(response);
+          this.getTasks();
+      });
+    },
+    clearAll(){
+      axios.delete(`api/tasks/clearAll`).then((response) => {
+          console.log(response);
+          this.getTasks();
+      })
+    }
   },
   created() {
     this.getTasks();
@@ -93,9 +112,10 @@ export default {
 
 <style>
 h3 {
+  color: white;
   margin: 0;
   font-size: 30px;
-  font-family:'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
   font-weight: bold;
 }
 .container {
@@ -111,18 +131,41 @@ h3 {
 body {
   margin: 0 !important;
 }
-.filters {
+.options {
+  padding: 0px;
   width: 100%;
-  background: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: space-between;
+}
+
+.filterButtons{
+  display: flex;
+  justify-content: center;
 }
 .btn {
   margin-left: 10px;
 }
 
-.itemsCount{
-  margin-left: 0;
+.itemsCount {
+  color: white;
+  margin: auto;
+  margin-left: 10px;
   font-size: 20px;
+}
+
+.clearOptions {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+  margin: 0;
+}
+
+.btn-link {
+  font-weight: bold;
+  color: white;
+  margin: 0px;
+  display: inline;
+  font-size: 15px;
 }
 </style>

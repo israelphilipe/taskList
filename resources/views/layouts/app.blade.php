@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
 </head>
-<body>
+<body style="background-color: rgb(34, 33, 33)">
     <div id="app">
         @yield('content')
     </div>
