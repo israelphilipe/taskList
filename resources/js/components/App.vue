@@ -4,9 +4,10 @@
       <h3>Task List</h3>
       <task-form v-on:newTask="addTask($event)" />
     </div>
-    <div class="shadow mb-5 bg-white rounded">
+    
+    <div :class="[this.isHidden ? 'hidden' : '', 'shadow mb-5 bg-white rounded']">
       <task-list v-on:taskUpdated="getTasks()" :tasks="this.tasks" />
-      <div class="options list-group-item">
+      <div class="options list-group-item ">
         <div class="itemsCount">
           <p>{{ `${this.itemsLeft} items left` }}</p>
         </div>
@@ -57,12 +58,17 @@ export default {
   },
   data() {
     return {
-      tasks: {},
+      tasks: [],
       filter: null,
       itemsLeft: 0,
     };
   },
-  computed: {},
+  computed: {
+    isHidden(){
+      return this.tasks.length == 0 && this.filter == null;
+    },
+
+  },
   methods: {
     addTask(taskText) {
       if (!taskText || taskText.length == 0) return;
@@ -167,5 +173,8 @@ body {
   margin: 0px;
   display: inline;
   font-size: 15px;
+}
+.hidden{
+  visibility: hidden;
 }
 </style>
